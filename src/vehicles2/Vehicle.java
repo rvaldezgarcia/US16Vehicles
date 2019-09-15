@@ -11,35 +11,29 @@ package vehicles2;
  */
 public class Vehicle {
     
-    private double gallonsOfGas;
-    private int mpg;
+    double gallonsOfGas;
+    private int milesPerGallons;
 
-    /**
-     * @return the gallonsOfGas
-     */
     public double getGallonsOfGas() {
-        return gallonsOfGas;
+        return this.gallonsOfGas;
     }
-
-    /**
-     * @param gallonsOfGas the gallonsOfGas to set
-     */
     public void setGallonsOfGas(double gallonsOfGas) {
         this.gallonsOfGas = gallonsOfGas;
     }
-
+    
     /**
-     * @return the mpg
+     * @return the milesPerGallons
      */
-    public int getMpg() {
-        return mpg;
+    public int getMilesPerGallons() {
+        return milesPerGallons;
     }
 
     /**
-     * @param mpg the mpg to set
+     * @param milesPerGallons the milesPerGallons to set
      */
-    public void setMpg(int mpg) {
-        this.mpg = mpg;
+    public void setMilesPerGallons(int milesPerGallons) {
+        this.milesPerGallons = milesPerGallons;
     }
+    
     
 }
