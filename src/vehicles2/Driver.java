@@ -24,10 +24,7 @@ public class Driver {
     public static void promptUser() {               
         
         // create a variable of type vehicle.
-        Vehicle myVehicle = new Vehicle();        
-                
-        // print the current state of the vehicle
-        System.out.println(myVehicle.toString());
+        Vehicle myVehicle = new Vehicle();                               
         
         // prompt user
         String strGallonsOfGas = JOptionPane.showInputDialog("Enter gallons of gas");
@@ -40,7 +37,7 @@ public class Driver {
         String strMilesPerGallon = JOptionPane.showInputDialog("Enter miles per gallon?");  
         int intMilesPerGallon = Integer.parseInt(strMilesPerGallon);               
         
-        myVehicle.setMilesPerGallons(intMilesPerGallon);
+        myVehicle.setMilesPerGallon(intMilesPerGallon);
         
         final String strOdometer = JOptionPane.showInputDialog("Enter odometer");
         final int intOdometer = Integer.parseInt(strOdometer);
@@ -48,12 +45,26 @@ public class Driver {
         myVehicle.setOdometer(intOdometer);
                         
         final String strDistanceTravelled = JOptionPane.showInputDialog("Enter distance to travel.");        
-        final int intDistance = Integer.parseInt(strDistanceTravelled);
+        final int intDistance = Integer.parseInt(strDistanceTravelled);                       
+        
+        // print the current state of the vehicle
+        System.out.println( "My Vehicle: " + myVehicle.toString());
         
         // move the vehicle
         myVehicle.go(intDistance);
         
         // print the current state of the vehicle
-        System.out.println(myVehicle.toString());
+        System.out.println("My Vehicle, after move: " + myVehicle.toString());
+        
+        // create a new object - your vehicle
+        Vehicle yourVehicle = new Vehicle(25, 25, 25000);
+        
+        System.out.println("Your Vehicle: " + yourVehicle);
+        
+        yourVehicle.go(intDistance);
+        
+        System.out.println("Your Vehicle, after move: " + yourVehicle);
+        
+        System.out.println("My Vehicle, after move: " + myVehicle.toString());
     }
 }

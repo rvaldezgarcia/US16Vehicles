@@ -12,17 +12,24 @@ package vehicles2;
 public class Vehicle {
     
     private double gallonsOfGas;
-    private int milesPerGallons;
+    private int milesPerGallon;
     private int odometer;
 
     public Vehicle() {
     
     }
     
+    public Vehicle (double gallonsOfGas, int inMilesPerGallon, int inOdometer) {
+    
+        this.gallonsOfGas = gallonsOfGas;
+        milesPerGallon = inMilesPerGallon;
+        odometer = inOdometer;
+    }
+    
     public void go(int distance) {
         
         // compute gallons consumed
-        double gallonsConsumed = distance / milesPerGallons;
+        double gallonsConsumed = distance / milesPerGallon;
         
         // substract gallonsConsumed from gallons of gas
         gallonsOfGas -= gallonsConsumed;
@@ -41,17 +48,18 @@ public class Vehicle {
     /**
      * @return the milesPerGallons
      */
-    public int getMilesPerGallons() {
-        return milesPerGallons;
+    public int getMilesPerGallon() {
+        return milesPerGallon;
     }
 
     /**
      * @param milesPerGallons the milesPerGallons to set
      */
-    public void setMilesPerGallons(int milesPerGallons) {
-        this.milesPerGallons = milesPerGallons;
+    public void setMilesPerGallon(int milesPerGallons) {
+        this.milesPerGallon = milesPerGallons;
     }
     
+    @Override
     public String toString() {
     
     return "Gallons of Gas: " + gallonsOfGas + " Odometer: " + getOdometer();
