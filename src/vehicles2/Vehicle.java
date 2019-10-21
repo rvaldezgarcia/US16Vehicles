@@ -15,54 +15,42 @@ public class Vehicle {
     private int milesPerGallon;
     private int odometer;
 
-    public Vehicle() {
-    
-    }
-    
-    public Vehicle (double gallonsOfGas, int inMilesPerGallon, int inOdometer) {
-    
-        this.gallonsOfGas = gallonsOfGas;
-        milesPerGallon = inMilesPerGallon;
-        odometer = inOdometer;
-    }
-    
     public void go(int distance) {
-        
         // compute gallons consumed
-        double gallonsConsumed = distance / milesPerGallon;
+        double gallonsConsumed = distance/milesPerGallon;
+        // subtract gallons consumed from gallons of gas
+        gallonsOfGas = gallonsOfGas - gallonsConsumed;
         
-        // substract gallonsConsumed from gallons of gas
-        gallonsOfGas -= gallonsConsumed;
-        
-        // increase the odometer.
+        // increase the odometer
         setOdometer(getOdometer() + distance);
-    }
+    } 
     
+    /**
+     * @return the gallonsOfGas
+     */
     public double getGallonsOfGas() {
-        return this.gallonsOfGas;
+        return gallonsOfGas;
     }
+
+    /**
+     * @param gallonsOfGas the gallonsOfGas to set
+     */
     public void setGallonsOfGas(double gallonsOfGas) {
         this.gallonsOfGas = gallonsOfGas;
     }
-    
+
     /**
-     * @return the milesPerGallons
+     * @return the milesPerGallon
      */
     public int getMilesPerGallon() {
         return milesPerGallon;
     }
 
     /**
-     * @param milesPerGallons the milesPerGallons to set
+     * @param milesPerGallon the milesPerGallon to set
      */
-    public void setMilesPerGallon(int milesPerGallons) {
-        this.milesPerGallon = milesPerGallons;
-    }
-    
-    @Override
-    public String toString() {
-    
-    return "Gallons of Gas: " + gallonsOfGas + " Odometer: " + getOdometer();
+    public void setMilesPerGallon(int milesPerGallon) {
+        this.milesPerGallon = milesPerGallon;
     }
 
     /**
@@ -78,4 +66,8 @@ public class Vehicle {
     public void setOdometer(int odometer) {
         this.odometer = odometer;
     }
+    
+    public String toString() {
+        return "Gallons of Gas: " + gallonsOfGas + " Odometer: " + getOdometer();
+    }   
 }
