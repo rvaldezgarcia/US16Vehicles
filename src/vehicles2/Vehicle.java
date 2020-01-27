@@ -14,6 +14,7 @@ public class Vehicle {
     private double gallonsOfGas;
     private int milesPerGallon;
     private int odometer;
+    private static double licensePlateFee;
 
     public void go(int distance) {
         // compute gallons consumed
@@ -24,6 +25,11 @@ public class Vehicle {
         // increase the odometer
         setOdometer(getOdometer() + distance);
     } 
+    
+    public void go(String distance) {
+        int intDistance = Integer.parseInt(distance);
+        go(intDistance);
+    }
     
     /**
      * @return the gallonsOfGas
@@ -70,4 +76,18 @@ public class Vehicle {
     public String toString() {
         return "Gallons of Gas: " + gallonsOfGas + " Odometer: " + getOdometer();
     }   
+
+    /**
+     * @return the licensePlateFee
+     */
+    public static double getLicensePlateFee() {
+        return licensePlateFee;
+    }
+
+    /**
+     * @param aLicensePlateFee the licensePlateFee to set
+     */
+    public static void setLicensePlateFee(double aLicensePlateFee) {
+        licensePlateFee = aLicensePlateFee;
+    }
 }

@@ -7,6 +7,8 @@ package vehicles2;
 
 import java.awt.HeadlessException;
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 
 /**
@@ -23,21 +25,58 @@ public class Driver {
      */
     public static void main(String[] args) {
 
-        promptUser();
+        try {   
+            promptUser();
+        } catch (Exception ex) {
+            Logger.getLogger(Driver.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
-    public static void promptUser() {
+    public static void promptUser() throws Exception {
 
         Vehicle myVehicle;
         int createAnother;
 
         // This ArrayList will contain all the vehicles that we create.
-        ArrayList<Vehicle> allVehicles = new ArrayList<Vehicle>();
+         ArrayList<Vehicle> allVehicles = new ArrayList<Vehicle>();
 
         do {
 
-            myVehicle = new Vehicle();
+            String[] availableCars = {NEON, CAVALIER, PRIUS};
+            
+            Object selectedCar = JOptionPane.showInputDialog(null, "Choose a Car to Create", "Choose a Car", JOptionPane.QUESTION_MESSAGE, null, availableCars, NEON);
+            
+            myVehicle = createVehicle(selectedCar);
+            
+            // ask Cavalier-specific questions
+            if( myVehicle instanceof Cavalier ) {
+                
+                int convertible = JOptionPane.showConfirmDialog(null, "Is this the convertible?", "Convertible", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
 
+                if( convertible == JOptionPane.YES_OPTION )
+                    ((Cavalier) myVehicle).setConvertible(true);
+                else 
+                    ((Cavalier) myVehicle).setConvertible(false);
+                
+                // set it to a covertible
+                 // ((Cavalier) myVehicle).setConvertible(true);
+            }
+            
+            // ask Prius-specific questions
+            if (myVehicle instanceof Prius) {
+                
+                Prius prius = (Prius) myVehicle;
+                
+                final String strMAH = JOptionPane.showInputDialog("Enter MilliAmp Hours");
+                int intMAH =  Integer.parseInt(strMAH);
+                
+                prius.setMilliampHours(intMAH);
+                
+                final String strMPMAH = JOptionPane.showInputDialog("Enter Miles per MAH");
+                int intMPMAH = Integer.parseInt(strMPMAH);
+                prius.setMilesPerMah(intMPMAH);
+            }
+            
             // prompt user
             String strGallonsOfGas
                     = JOptionPane.showInputDialog("Enter gallons of gas");
@@ -52,8 +91,14 @@ public class Driver {
 
                 int intMilesPerGallon = promptForInteger("Enter miles per gallon", 0, 100);
                 myVehicle.setMilesPerGallon(intMilesPerGallon);
-            } catch(Exception e) {
+                
+            } 
+            catch(VehicleException e) {                
                 JOptionPane.showMessageDialog(null, "Unable to acquire valid data. Program terminating.");
+                return;
+            }
+            catch(Exception e) {
+                JOptionPane.showMessageDialog(null, "Unknown error. Program terminating.");
                 // System.exit(0); crash
                 return;
             }            
@@ -62,7 +107,12 @@ public class Driver {
                 
                 int intOdometer = promptForInteger("Enter odomoter", 0, 1000000);
                 myVehicle.setOdometer(intOdometer);
-            } catch(Exception e) {
+            }
+            catch(VehicleException e) {                
+                JOptionPane.showMessageDialog(null, "Unable to acquire valid data. Program terminating.");
+                return;
+            }
+            catch(Exception e) {
                 JOptionPane.showMessageDialog(null, "Unable to acquire valid data. Program terminating.");
                 // System.exit(0); crash
                 return;
@@ -116,6 +166,41 @@ public class Driver {
         }
 
     }
+
+    /**
+     * Simple Factory method to create and return a subclass of type vehicle.
+     * @param selectedCar A string representing the vehicle we want to create.
+     * @return the created vehicle.
+     * @throws Exception 
+     */
+    public static Vehicle createVehicle(Object selectedCar) throws Exception {
+        
+        // Vehicle myVehicle;
+        
+        String fullyQualifiedName = "vehicles2." + selectedCar.toString();
+        
+        Vehicle myVehicle = (Vehicle) Class.forName( fullyQualifiedName ).newInstance();
+        
+        return myVehicle;
+        
+        /* if( selectedCar.toString().equalsIgnoreCase(NEON) ) {
+            myVehicle = new Neon();
+        }
+        else if( selectedCar.toString().equalsIgnoreCase(CAVALIER) ) {
+            myVehicle = new Cavalier();
+        }
+        else if(  selectedCar.toString().equalsIgnoreCase(PRIUS) ) {
+            myVehicle = new Prius();
+        }
+        else {
+            
+            throw new Exception("Unrecognized Car.");
+        }
+        return myVehicle; */
+    }
+    public static final String PRIUS = "Prius";
+    public static final String CAVALIER = "Cavalier";
+    public static final String NEON = "Neon";
 
     public static void promptForTrips() throws HeadlessException, NumberFormatException {
 
@@ -177,14 +262,17 @@ public class Driver {
             } catch(NumberFormatException e) {
 
                 // this block will specifically handle only NumberFormatException.
-                System.out.println("Inavlid number.");
+                System.out.println("Invalid number.");
                 int tryAgain = JOptionPane.showConfirmDialog(null, "You did not enter a valid number. Do you want to try again?", "Invalid Input", JOptionPane.YES_NO_OPTION, JOptionPane.ERROR_MESSAGE);
                 
                 if(tryAgain == JOptionPane.NO_OPTION) {
                     // we are here, because the user does not want to keep trying.
-                    throw new Exception("The user has exceeded the number of attempts for valid data.");
+                    throw new VehicleException("The user has exceeded the number of attempts for valid data.");
                 }
-            }        
+            }
+            finally {
+                System.out.println("Finished with character to number validation.");
+            }
         }
 
         while (!(intInput >= low && intInput <= high)) {
