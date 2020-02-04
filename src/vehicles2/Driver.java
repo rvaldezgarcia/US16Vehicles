@@ -58,6 +58,9 @@ public class Driver {
                 else 
                     ((Cavalier) myVehicle).setConvertible(false);
                 
+                
+                
+                
                 // set it to a covertible
                  // ((Cavalier) myVehicle).setConvertible(true);
             }
