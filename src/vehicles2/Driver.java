@@ -57,12 +57,10 @@ public class Driver {
                     ((Cavalier) myVehicle).setConvertible(true);
                 else 
                     ((Cavalier) myVehicle).setConvertible(false);
-                
-                
-                // More changes to test
-                
-                
-                // set it to a covertible
+              
+                // At master
+
+              // set it to a covertible
                  // ((Cavalier) myVehicle).setConvertible(true);
             }
             
